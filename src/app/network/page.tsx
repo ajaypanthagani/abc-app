@@ -9,6 +9,7 @@ import { copy } from '@/lib/copy';
 import { Banner } from '@/components/ui/Banner';
 import { Button } from '@/components/ui/Button';
 import { Micro } from '@/components/ui/Micro';
+import { Wordmark } from '@/components/ui/Wordmark';
 import { Pill } from '@/components/ui/Pill';
 import { StatTile } from '@/components/ui/StatTile';
 import { ResyncButton } from '@/components/network/ResyncButton';
@@ -30,10 +31,7 @@ export default async function NetworkPage() {
   return (
     <div className="mx-auto min-h-screen w-full max-w-[760px] px-5 pb-16">
       <header className="flex items-center justify-between border-b border-edge py-5">
-        <div className="flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center bg-ink font-bold text-[13px] text-lime">ABC</span>
-          <Micro>Ads By Creators</Micro>
-        </div>
+        <Wordmark />
         <SignOutButton />
       </header>
 

@@ -1,16 +1,6 @@
 import { copy } from '@/lib/copy';
 import { Micro } from '@/components/ui/Micro';
-
-function Wordmark() {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="flex size-9 items-center justify-center bg-lime font-bold text-[13px] tracking-tight text-ink">
-        ABC
-      </span>
-      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper">Ads By Creators</span>
-    </div>
-  );
-}
+import { Wordmark } from '@/components/ui/Wordmark';
 
 // Left pitch panel on lg+; collapses to a compact ink band on mobile so the
 // form stays above the fold.
@@ -19,13 +9,13 @@ export function BrandPanel() {
     <div className="on-ink bg-surface">
       {/* Mobile band */}
       <div className="flex items-center justify-between px-5 py-4 lg:hidden">
-        <Wordmark />
+        <Wordmark tone="ink" />
         <Micro>{copy.pitch.eyebrow}</Micro>
       </div>
 
       {/* Full panel */}
       <div className="hidden min-h-screen flex-col justify-between p-14 lg:flex">
-        <Wordmark />
+        <Wordmark tone="ink" />
         <div className="max-w-md">
           <Micro className="!text-lime">{copy.pitch.eyebrow}</Micro>
           <h1 className="mt-4 text-[44px] font-medium leading-[1.05] tracking-[-0.03em] text-paper">

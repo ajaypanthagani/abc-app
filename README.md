@@ -43,7 +43,7 @@ Visit `http://localhost:3000`. Mock sign-in tips (query params on the API's
 
 Tokens in `src/app/globals.css` (`@theme`): Electric Lime `#C7FF32` (ink text
 only, never on light), Ink `#111111`, Warm White `#FAFAF7`, Gray `#666666`,
-hairline `#E6E6E0`. Space Grotesk (UI) + JetBrains Mono (micro-labels).
+hairline `#E6E6E0`. Geist (UI) + Geist Mono (micro-labels) — same as the marketing site, whose script "abc" wordmark (`public/logo-mark.png`, inverse variant for dark surfaces) is the shared logo.
 2px radius and no shadows — enforced by resetting the Tailwind scales.
 `.on-ink` flips the semantic surface tokens for dark panels. All user-facing
 strings live in `src/lib/copy.ts`.

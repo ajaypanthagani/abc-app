@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requireStep } from '@/lib/onboarding';
 import { getCreator, getTaxonomies } from '@/lib/api/server';
-import { Micro } from '@/components/ui/Micro';
+import { Wordmark } from '@/components/ui/Wordmark';
 import { ProfileForm } from '@/components/onboarding/ProfileForm';
 
 export const metadata: Metadata = { title: 'Edit profile' };
@@ -14,10 +14,7 @@ export default async function EditProfilePage() {
   return (
     <div className="mx-auto min-h-screen w-full max-w-[560px] px-5 pb-16">
       <header className="flex items-center justify-between border-b border-edge py-5">
-        <div className="flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center bg-ink font-bold text-[13px] text-lime">ABC</span>
-          <Micro>Edit profile</Micro>
-        </div>
+        <Wordmark />
         <Link href="/network" className="font-mono text-[11px] uppercase tracking-micro text-fg-muted hover:text-fg">
           ← Back
         </Link>

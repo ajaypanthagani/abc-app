@@ -19,5 +19,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.png|apple-icon.png).*)'],
+  // Skip Next internals and any file request (public/ assets, icons) —
+  // app routes never contain a dot.
+  matcher: ['/((?!_next/static|_next/image|.*\\..*).*)'],
 };

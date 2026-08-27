@@ -25,9 +25,9 @@
   --color-fg-muted: var(--color-gray);
   --color-edge: var(--color-line);
 
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", monospace;
-  --tracking-micro: 0.14em;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  --tracking-micro: 0.2em; /* matches the marketing site eyebrows */
 
   /* Near-square editorial language: kill the radius scale, no shadows */
   --radius-*: initial;
