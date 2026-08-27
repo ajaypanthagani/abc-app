@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand (same names as the marketing repo) */
+  --color-lime: #c7ff32;
+  --color-lime-hover: #b8f01f;
+  --color-ink: #111111;
+  --color-paper: #fafaf7;
+  --color-gray: #666666;
+
+  /* Dashboard neutrals from the mockups */
+  --color-line: #e6e6e0;
+  --color-pill: #f2f2ec;
+  --color-field: #dcdcd6;
+  --color-faint: #999999; /* decorative only — fails AA for informational text */
+  --color-card: #ffffff;
+
+  /* Dark-panel tones */
+  --color-ink-line: #2b2b2b;
+  --color-paper-dim: #cccccc;
+
+  /* Semantic surface aliases, flipped by .on-ink */
+  --color-surface: var(--color-paper);
+  --color-fg: var(--color-ink);
+  --color-fg-muted: var(--color-gray);
+  --color-edge: var(--color-line);
+
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", monospace;
+  --tracking-micro: 0.14em;
+
+  /* Near-square editorial language: kill the radius scale, no shadows */
+  --radius-*: initial;
+  --radius: 2px;
+  --radius-full: 9999px;
+  --shadow-*: initial;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark surface context (sidebar, pitch panel, ink bands) */
+.on-ink {
+  --color-surface: var(--color-ink);
+  --color-fg: var(--color-paper);
+  --color-fg-muted: var(--color-paper-dim);
+  --color-edge: var(--color-ink-line);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.on-ink :focus-visible {
+  outline-color: var(--color-lime);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes abcPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }

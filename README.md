@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# abc-app
 
-## Getting Started
+Ads By Creators — creator dashboard at `app.adsbycreators.com`. Phase 1:
+the onboarding flow (sign in with Instagram → profile + parallel data sync →
+"you're in the network").
 
-First, run the development server:
+- **Stack**: Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
+- **Backend**: the separate [`abc-api`](../abc-api) repo (NestJS) at
+  `api.adsbycreators.com`; session lives in an httpOnly `abc_session` cookie on
+  `.adsbycreators.com`, so `app.*` never touches tokens.
+- **Auth gating**: `src/proxy.ts` (Next 16's middleware replacement) checks
+  cookie *presence* only; every gated page asserts its onboarding step against
+  `GET /v1/onboarding` (`requireStep()` in `src/lib/onboarding.ts`), which is
+  what makes onboarding resumable from any URL.
+
+## Routes
+
+| route | purpose |
+|---|---|
+| `/` | dispatcher → canonical screen for the server-side onboarding state |
+| `/signin` | public; "Continue with Instagram" + all OAuth error states |
+| `/auth/callback` | zero-UI landing after the API sets the session cookie |
+| `/onboarding/connect` | permission explainer / reconnect entry |
+| `/onboarding/profile` | categories, city, languages, exclusions — with a live sync strip (the Instagram backfill runs in parallel) |
+| `/onboarding/sync` | full sync progress; only shown if profile finished first |
+| `/network` | terminal page: real synced stats, payout explainer, profile summary, connection health |
+| `/profile` | edit campaign preferences after onboarding |
+| `/data-deletion` | public status page for Meta data-deletion requests |
+
+## Local development
 
 ```bash
+# abc-api must be running on :4000 (INSTAGRAM_MODE=mock works end to end)
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`. Mock sign-in tips (query params on the API's
+`/v1/auth/instagram/start`): `?as=<username>`, `?account_type=PERSONAL`,
+`?followers=50`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Design system
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tokens in `src/app/globals.css` (`@theme`): Electric Lime `#C7FF32` (ink text
+only, never on light), Ink `#111111`, Warm White `#FAFAF7`, Gray `#666666`,
+hairline `#E6E6E0`. Space Grotesk (UI) + JetBrains Mono (micro-labels).
+2px radius and no shadows — enforced by resetting the Tailwind scales.
+`.on-ink` flips the semantic surface tokens for dark panels. All user-facing
+strings live in `src/lib/copy.ts`.
 
-## Learn More
+## Deploy (Vercel)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Domain `app.adsbycreators.com`, env `NEXT_PUBLIC_API_URL=https://api.adsbycreators.com`.
+Preview deployments on `*.vercel.app` cannot authenticate (cookie domain) —
+they exercise the signed-out UI only.
