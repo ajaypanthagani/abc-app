@@ -4,11 +4,11 @@
 export const copy = {
   pitch: {
     eyebrow: 'Creator onboarding',
-    headline: 'Get paid for the views you already earn.',
+    headline: 'Get paid for brand campaigns.',
     body:
-      'Connect Instagram once. ABC brings you campaigns that match your audience and pays on measured delivery. No pitching, no negotiating.',
+      'Connect Instagram once. ABC matches you with brand campaigns that fit your audience — the payout is stated before you accept. No pitching, no negotiating.',
     points: [
-      'Paid on the eligible views your posts actually earn',
+      'Paid per campaign, with the payout stated up front',
       'Campaign briefs matched to your categories',
       'Instagram only at launch · India',
     ],
