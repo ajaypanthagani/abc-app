@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { API_URL } from '@/lib/api/shared';
+import { site } from '@/config/site';
 
 export const metadata: Metadata = { title: 'Data deletion' };
 
@@ -45,6 +46,13 @@ export default async function DataDeletionPage({
             Your deletion request is being processed. Check back on this same link shortly.
           </p>
         )}
+        <p className="mt-4 text-[13px] text-fg-muted">
+          How ABC handles Instagram data is described in the{' '}
+          <a href={`${site.marketingUrl}/privacy`} className="underline underline-offset-2">
+            Privacy Policy
+          </a>
+          .
+        </p>
       </div>
     </main>
   );

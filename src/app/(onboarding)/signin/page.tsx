@@ -66,7 +66,21 @@ export default async function SigninPage({
         ))}
       </ul>
 
-      <p className="mt-8 text-[12px] leading-relaxed text-fg-muted">{copy.signin.legal}</p>
+      <p className="mt-8 text-[12px] leading-relaxed text-fg-muted">
+        By continuing you agree to the{" "}
+        <a href={`${site.marketingUrl}/creator-terms`} className="underline underline-offset-2 hover:text-fg">
+          Creator Terms
+        </a>{" "}
+        and{" "}
+        <a href={`${site.marketingUrl}/terms`} className="underline underline-offset-2 hover:text-fg">
+          Terms of Service
+        </a>
+        , and acknowledge the{" "}
+        <a href={`${site.marketingUrl}/privacy`} className="underline underline-offset-2 hover:text-fg">
+          Privacy Policy
+        </a>
+        . Campaign measurement rules and payout caps are stated on every campaign.
+      </p>
     </div>
   );
 }
