@@ -21,6 +21,7 @@ export const copy = {
       'Requires a professional Instagram account — Creator or Business.',
       'One Instagram account per ABC creator profile.',
       'Already on ABC? The same button signs you in.',
+      'You confirm access on instagram.com — if your browser is not signed in to Instagram, it asks you to log in there first.',
     ],
     legal:
       'By continuing you agree to the ABC creator terms, including the eligible-delivery measurement rules and payout caps stated on every campaign.',

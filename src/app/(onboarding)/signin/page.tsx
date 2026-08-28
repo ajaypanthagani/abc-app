@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { apiUrl } from '@/lib/api/shared';
 import { copy } from '@/lib/copy';
 import { site } from '@/config/site';
-import { Button } from '@/components/ui/Button';
+import { InstagramConnectButton } from '@/components/onboarding/InstagramConnectButton';
 
 export const metadata: Metadata = { title: 'Sign in' };
 
@@ -52,10 +51,10 @@ export default async function SigninPage({
       <h2 className="text-[27px] font-medium tracking-[-0.02em] text-fg">{copy.signin.title}</h2>
       <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">{copy.signin.sub}</p>
 
-      <Button href={apiUrl('/v1/auth/instagram/start')} className="mt-7 h-14 w-full text-[16px]">
+      <InstagramConnectButton className="mt-7 h-14 w-full text-[16px]">
         <InstagramGlyph />
         {copy.signin.cta}
-      </Button>
+      </InstagramConnectButton>
 
       <ul className="mt-8 space-y-3 border-t border-edge pt-6">
         {copy.signin.notes.map((note) => (

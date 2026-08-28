@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { requireStep } from '@/lib/onboarding';
-import { apiUrl } from '@/lib/api/shared';
 import { copy } from '@/lib/copy';
-import { Button } from '@/components/ui/Button';
+import { InstagramConnectButton } from '@/components/onboarding/InstagramConnectButton';
 import { Micro } from '@/components/ui/Micro';
 
 export const metadata: Metadata = { title: 'Connect Instagram' };
@@ -38,9 +37,9 @@ export default async function ConnectPage() {
         <div className="border-t border-edge px-4 py-3 text-[12px] text-fg-muted">{copy.connect.footer}</div>
       </div>
 
-      <Button href={apiUrl('/v1/auth/instagram/start')} className="mt-6 h-14 w-full text-[16px]">
+      <InstagramConnectButton className="mt-6 h-14 w-full text-[16px]">
         {copy.connect.cta}
-      </Button>
+      </InstagramConnectButton>
     </div>
   );
 }

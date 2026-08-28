@@ -4,10 +4,9 @@ import { requireStep } from '@/lib/onboarding';
 import { apiFetch, getCreator } from '@/lib/api/server';
 import type { ConnectionHealth } from '@/lib/api/types';
 import { compactNumber, formatDate, formatNumber, relativeTime } from '@/lib/format';
-import { apiUrl } from '@/lib/api/shared';
 import { copy } from '@/lib/copy';
 import { Banner } from '@/components/ui/Banner';
-import { Button } from '@/components/ui/Button';
+import { InstagramConnectButton } from '@/components/onboarding/InstagramConnectButton';
 import { Micro } from '@/components/ui/Micro';
 import { Wordmark } from '@/components/ui/Wordmark';
 import { Pill } from '@/components/ui/Pill';
@@ -39,9 +38,9 @@ export default async function NetworkPage() {
         <div className="mt-6">
           <Banner
             action={
-              <Button variant="lime" href={apiUrl('/v1/auth/instagram/start')} className="min-h-9 px-4 text-[13px]">
+              <InstagramConnectButton variant="lime" className="min-h-9 px-4 text-[13px]">
                 {copy.banner.reconnectCta}
-              </Button>
+              </InstagramConnectButton>
             }
           >
             {copy.banner.reconnect}
