@@ -1,16 +1,16 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
-import { apiUrl } from '@/lib/api/shared';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
 
-// Starts the Instagram OAuth flow with a script navigation instead of a
-// plain <a href>. A tapped link to instagram.com (or a server 302 riding
-// that tap) is eligible for universal-link/app-link interception on phones,
-// which hands the OAuth URL to the Instagram app — and the app cannot render
-// the consent dialog, so the flow dead-ends on the user's feed.
-// window.location.assign is not eligible for interception, keeping the whole
-// flow in the browser.
+// Starts the Instagram OAuth flow via the /auth/instagram interstitial
+// instead of navigating to instagram.com directly. A navigation to
+// instagram.com that carries the tap's user gesture is eligible for
+// app-link/universal-link interception: the phone hands the URL to the
+// Instagram native app, which cannot render the OAuth consent dialog, and
+// the flow dead-ends on the user's feed. The interstitial forwards from a
+// fresh document without a gesture, which keeps the dialog in the browser
+// (see InstagramRedirect).
 export function InstagramConnectButton({
   children,
   variant,
@@ -22,19 +22,20 @@ export function InstagramConnectButton({
 }) {
   const [busy, setBusy] = useState(false);
 
-  async function start() {
+  // Un-stick the button when the page is restored from the back-forward
+  // cache (mobile Back from Instagram restores the old DOM, busy included).
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) setBusy(false);
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, []);
+
+  function start() {
     if (busy) return;
     setBusy(true);
-    try {
-      const res = await fetch(apiUrl('/v1/auth/instagram/url'));
-      if (!res.ok) throw new Error(`start_url_${res.status}`);
-      const { url } = (await res.json()) as { url: string };
-      window.location.assign(url);
-    } catch {
-      // Don't strand the tap — the redirecting endpoint still completes the
-      // flow, just without the interception safeguard.
-      window.location.assign(apiUrl('/v1/auth/instagram/start'));
-    }
+    window.location.assign('/auth/instagram');
   }
 
   return (

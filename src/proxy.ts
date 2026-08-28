@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
 const SESSION_COOKIE = 'abc_session';
-const PUBLIC_PATHS = ['/signin', '/data-deletion'];
+const PUBLIC_PATHS = ['/signin', '/data-deletion', '/auth/instagram'];
 
 // Cheap cookie-presence gate only — no API calls here (runs on every request).
 // Whether the session is actually valid is decided by the API: server fetches
