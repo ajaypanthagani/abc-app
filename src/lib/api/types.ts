@@ -38,8 +38,11 @@ export interface CreatorMe {
   displayName: string | null;
   availability: 'OPEN' | 'LIMITED' | 'PAUSED';
   city: { slug: string; displayName: string } | null;
+  cityOtherText: string | null;
   categories: string[];
+  categoriesOtherText: string | null;
   languages: string[];
+  languagesOtherText: string | null;
   exclusions: string[];
   profileCompletedAt: string | null;
   onboardingCompletedAt: string | null;
@@ -90,8 +93,11 @@ export interface Taxonomies {
 
 export interface ProfilePayload {
   categories: string[];
+  categoriesOtherText?: string;
   citySlug: string;
+  cityOtherText?: string;
   languages: string[];
+  languagesOtherText?: string;
   exclusions: string[];
   availability?: 'OPEN' | 'LIMITED' | 'PAUSED';
 }

@@ -94,9 +94,32 @@ export default async function NetworkPage() {
           </Link>
         </div>
         <dl className="divide-y divide-line">
-          <ProfileRow label="Categories" value={labelFor(creator.categories, 'categories')} />
-          <ProfileRow label="City" value={creator.city?.displayName ?? '—'} />
-          <ProfileRow label="Languages" value={creator.languages.map((l) => l.toUpperCase()).join(' · ') || '—'} />
+          <ProfileRow
+            label="Categories"
+            value={
+              creator.categories.length === 0
+                ? '—'
+                : creator.categories
+                    .map((c) => (c === 'other' ? creator.categoriesOtherText ?? 'Other' : prettySlug(c)))
+                    .join(' · ')
+            }
+          />
+          <ProfileRow
+            label="City"
+            value={
+              creator.city?.slug === 'other'
+                ? creator.cityOtherText ?? creator.city.displayName
+                : creator.city?.displayName ?? '—'
+            }
+          />
+          <ProfileRow
+            label="Languages"
+            value={
+              creator.languages
+                .map((l) => (l === 'other' ? creator.languagesOtherText ?? 'Other' : l.toUpperCase()))
+                .join(' · ') || '—'
+            }
+          />
           <ProfileRow label="Won't promote" value={labelFor(creator.exclusions, 'exclusions')} />
         </dl>
       </section>
