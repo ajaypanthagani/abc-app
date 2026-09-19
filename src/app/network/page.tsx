@@ -70,7 +70,20 @@ export default async function NetworkPage() {
         />
       </section>
 
-      <section className="mt-10 rounded border border-edge bg-card">
+      <section className="mt-8 rounded border border-edge bg-card">
+        <div className="flex items-center justify-between gap-4 border-b border-edge px-5 py-3">
+          <Micro>{copy.network.insightsTitle}</Micro>
+          <Link
+            href="/insights"
+            className="shrink-0 font-mono text-[11px] uppercase tracking-micro text-fg underline underline-offset-4"
+          >
+            {copy.network.insightsCta}
+          </Link>
+        </div>
+        <p className="px-5 py-4 text-[14px] leading-relaxed text-fg-muted">{copy.network.insightsBody}</p>
+      </section>
+
+      <section className="mt-6 rounded border border-edge bg-card">
         <div className="border-b border-edge px-5 py-3">
           <Micro>{copy.network.howPaidTitle}</Micro>
         </div>

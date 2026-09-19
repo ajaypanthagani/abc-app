@@ -3,7 +3,14 @@ import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { API_URL } from './shared';
-import type { CreatorMe, OnboardingState, SessionResponse, SyncCurrent, Taxonomies } from './types';
+import type {
+  CreatorInsights,
+  CreatorMe,
+  OnboardingState,
+  SessionResponse,
+  SyncCurrent,
+  Taxonomies,
+} from './types';
 
 export class ApiServerError extends Error {
   constructor(
@@ -42,3 +49,4 @@ export const getOnboarding = cache(() => apiFetch<OnboardingState>('/v1/onboardi
 export const getCreator = cache(() => apiFetch<CreatorMe>('/v1/creators/me'));
 export const getTaxonomies = cache(() => apiFetch<Taxonomies>('/v1/taxonomies'));
 export const getSyncCurrent = cache(() => apiFetch<SyncCurrent>('/v1/creators/me/sync/current'));
+export const getInsights = cache(() => apiFetch<CreatorInsights>('/v1/creators/me/insights'));

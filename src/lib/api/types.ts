@@ -67,6 +67,60 @@ export interface CreatorMe {
   } | null;
 }
 
+export interface AudienceBucket {
+  bucket: string;
+  followerCount: number | null;
+  share: number | null;
+}
+
+export interface InsightsReel {
+  id: string;
+  permalink: string | null;
+  thumbnailUrl: string | null;
+  caption: string | null;
+  mediaType: string;
+  postedAt: string;
+  measuredAt: string | null;
+  views: number | null;
+  reach: number | null;
+  likes: number | null;
+  comments: number | null;
+  shares: number | null;
+  saves: number | null;
+  totalInteractions: number | null;
+}
+
+export type CreatorInsights =
+  | { connected: false }
+  | {
+      connected: true;
+      username: string;
+      lastSyncAt: string | null;
+      reels: InsightsReel[];
+      audience: {
+        capturedAt: string | null;
+        available: boolean;
+        age: AudienceBucket[];
+        gender: AudienceBucket[];
+        cities: AudienceBucket[];
+        countries: AudienceBucket[];
+      };
+      followerTrend: { capturedAt: string; followersCount: number | null; mediaCount: number | null }[];
+      summary: {
+        computedAt: string;
+        windowDays: number;
+        followersCount: number | null;
+        medianReelViews: number | null;
+        meanReelViews: number | null;
+        saveRate: number | null;
+        shareRate: number | null;
+        commentRate: number | null;
+        engagementRate: number | null;
+        viewFollowerRatio: number | null;
+        sampleMediaCount: number | null;
+      } | null;
+    };
+
 export interface ConnectionHealth {
   status: 'NONE' | 'ACTIVE' | 'TOKEN_EXPIRED' | 'REVOKED' | 'DISCONNECTED';
   igUsername?: string;
