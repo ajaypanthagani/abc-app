@@ -1,0 +1,37 @@
+name: Keep API warm
+
+# Render's free instance spins down after ~15 minutes idle and then takes ~50
+# seconds to answer the next request. During Meta App Review a reviewer who
+# hits a cold start sees what looks like a broken app, so ping the health
+# endpoint often enough that it never sleeps.
+#
+# This lives in the public frontend repo deliberately: scheduled workflows on a
+# private repo bill against the 2,000 free minutes a month, and a 10-minute
+# cadence needs roughly 4,300 — public repositories get unlimited minutes.
+#
+# Retire this once the API is on an instance that does not sleep, or replace it
+# with a real uptime monitor that also alerts.
+
+on:
+  schedule:
+    # Best-effort: GitHub delays scheduled runs under load, which is fine here.
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+# Never let a stuck ping hold a runner, and never queue them up behind
+# each other.
+concurrency:
+  group: keep-api-warm
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping the API health endpoint
+        run: |
+          code=$(curl -sS -m 90 -o /dev/null -w '%{http_code}' https://api.adsbycreators.com/v1/health)
+          echo "health=$code"
+          # A cold start still answers 200, just slowly; anything else is real.
+          test "$code" = "200"
