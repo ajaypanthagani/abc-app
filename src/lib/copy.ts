@@ -110,14 +110,14 @@ export const copy = {
   network: {
     eyebrow: "You're in",
     title: "You're in the ABC network",
-    sub: 'ABC matches campaigns to your categories and audience. When one fits, it lands here first — with the payout stated before you accept.',
+    sub: 'Your Instagram insights are imported and kept current. Brand campaigns are not running yet — when they start, ones that fit your categories and audience land here first, with the payout stated before you accept.',
     statMedian: 'Median Reel views',
     statFollowers: 'Followers',
     statReels: 'Reels synced',
-    howPaidTitle: 'How you get paid',
+    howPaidTitle: 'How payouts will work',
     howPaid: [
-      'Every campaign ABC sends you states an estimated payout and a maximum payable-views cap before you accept.',
-      'Your final payout is calculated from eligible views measured for 30 days after publication, up to that cap.',
+      'Campaigns are not live yet. When ABC sends you one, it will state an estimated payout and a maximum payable-views cap before you accept.',
+      'Your payout will be calculated from eligible views measured for 30 days after publication, up to that cap.',
     ],
     profileTitle: 'Your campaign profile',
     editProfile: 'Edit profile',
