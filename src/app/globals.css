@@ -15,6 +15,13 @@
   --color-faint: #999999; /* decorative only — fails AA for informational text */
   --color-card: #ffffff;
 
+  /* Ops console */
+  --color-danger: #b00020;
+  --color-danger-soft: #ff7a6e;
+  --color-hush: #bbbbb5;
+  --color-ink-2: #1a1a1a;
+  --color-ink-3: #262626;
+
   /* Dark-panel tones */
   --color-ink-line: #2b2b2b;
   --color-paper-dim: #cccccc;
@@ -73,4 +80,22 @@ body {
 @keyframes abcPulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
+}
+
+/* Ops console (/admin): its own type pairing from the ops design — Space
+   Grotesk for UI, JetBrains Mono for micro-labels and figures. Scoped so the
+   creator app keeps Geist. */
+.admin-console {
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+  font-family: var(--font-sans);
+}
+.admin-console .tabular { font-variant-numeric: tabular-nums; }
+/* Grid items default to min-width:auto, so a truncated line would widen its
+   column past the viewport on phones. */
+.admin-console main .grid > * { min-width: 0; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
 }

@@ -27,6 +27,29 @@ the onboarding flow (sign in with Instagram → profile + parallel data sync →
 | `/profile` | edit campaign preferences after onboarding |
 | `/data-deletion` | public status page for Meta data-deletion requests |
 
+## Ops console (`/admin`)
+
+Internal staff console, built from the ops design ("Admin Console"). Staff sign
+in with email + password (`/admin/signin`; accounts come from abc-api's
+`npm run staff:create` — there is no signup) and get a separate
+`abc_staff_session` cookie, so a staff and a creator sign-in coexist. The proxy
+gates `/admin/*` on that cookie; RSC reads go through `adminFetch()`
+(`src/lib/admin/server.ts`), mutations through `adminClientFetch()`.
+
+| route | purpose |
+|---|---|
+| `/admin` | overview: KPIs, work queues, month economics, alerts |
+| `/admin/campaigns` · `/new` · `/[id]` | list, 5-step guided brief, detail (overview / delivery & drafts / performance / money / activity) |
+| `/admin/campaigns/[id]/mix` | mix builder: scored candidates, filters, KPI projections, propose / finalize |
+| `/admin/quotes/[id]` | quote editor (overrides, fees, rights, deposit terms, margin-floor approval, send) |
+| `/admin/creators` · `/[id]` | creator directory and ops profile (audience, pricing, reliability, history) |
+| `/admin/brands` · `/admin/payments` · `/admin/rates` | brands, payouts + invoices, CPM rate reviews |
+| `/admin/quotes/[id]/print`, `/admin/campaigns/[id]/mix/[mixId]/print` | brand-facing PDFs (browser print) — never show CPM, payouts or margin |
+
+The console uses its own type pairing (Space Grotesk + JetBrains Mono, scoped
+by `.admin-console`) and keeps its strings inline: it is internal and
+English-only, unlike the creator app's `copy.ts` seam.
+
 ## Local development
 
 ```bash
