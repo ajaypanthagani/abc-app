@@ -2,7 +2,7 @@ import 'server-only';
 import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { API_URL } from './shared';
+import { SERVER_API_URL } from './shared';
 import type {
   CreatorInsights,
   CreatorMe,
@@ -26,7 +26,7 @@ export class ApiServerError extends Error {
 // funnels 401s to /signin.
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const cookieStore = await cookies();
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(`${SERVER_API_URL}${path}`, {
     ...init,
     headers: {
       cookie: cookieStore.toString(),

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { API_URL } from '@/lib/api/shared';
+import { SERVER_API_URL } from '@/lib/api/shared';
 import { site } from '@/config/site';
 
 export const metadata: Metadata = { title: 'Data deletion' };
@@ -16,7 +16,7 @@ export default async function DataDeletionPage({
   let status: string | null = null;
   let completedAt: string | null = null;
   if (code) {
-    const res = await fetch(`${API_URL}/v1/webhooks/meta/data-deletion/${encodeURIComponent(code)}`, {
+    const res = await fetch(`${SERVER_API_URL}/v1/webhooks/meta/data-deletion/${encodeURIComponent(code)}`, {
       cache: 'no-store',
     });
     if (res.ok) {

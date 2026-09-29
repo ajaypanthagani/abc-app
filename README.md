@@ -71,8 +71,10 @@ hairline `#E6E6E0`. Geist (UI) + Geist Mono (micro-labels) — same as the marke
 `.on-ink` flips the semantic surface tokens for dark panels. All user-facing
 strings live in `src/lib/copy.ts`.
 
-## Deploy (Vercel)
+## Deploy (Railway)
 
-Domain `app.adsbycreators.com`, env `NEXT_PUBLIC_API_URL=https://api.adsbycreators.com`.
-Preview deployments on `*.vercel.app` cannot authenticate (cookie domain) —
-they exercise the signed-out UI only.
+Same Railway project and region (Singapore) as abc-api; `railway.json`
+builds with Railpack and runs `next start`. Domain `app.adsbycreators.com`.
+Env: `NEXT_PUBLIC_API_URL=https://api.adsbycreators.com` (browser calls,
+needed at build time) and `API_INTERNAL_URL=http://${{abc-api.RAILWAY_PRIVATE_DOMAIN}}:${{abc-api.PORT}}`
+so server-rendered pages reach the API over the private network.

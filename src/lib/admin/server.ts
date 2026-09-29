@@ -2,7 +2,7 @@ import 'server-only';
 import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
-import { API_URL } from '../api/shared';
+import { SERVER_API_URL } from '../api/shared';
 import type { Badges, StaffSession } from './types';
 
 export class AdminApiError extends Error {
@@ -19,7 +19,7 @@ export class AdminApiError extends Error {
 // funnels 401s to the ops sign-in and 404s to the not-found page.
 export async function adminFetch<T>(path: string): Promise<T> {
   const cookieStore = await cookies();
-  const res = await fetch(`${API_URL}/v1/admin${path}`, {
+  const res = await fetch(`${SERVER_API_URL}/v1/admin${path}`, {
     headers: { cookie: cookieStore.toString(), accept: 'application/json' },
     cache: 'no-store',
   });
