@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { preconnect, prefetchDNS } from 'react-dom';
 import { copy } from '@/lib/copy';
 import { site } from '@/config/site';
 import { InstagramConnectButton } from '@/components/onboarding/InstagramConnectButton';
@@ -18,6 +19,10 @@ export default async function SigninPage({
 }: {
   searchParams: Promise<{ error?: string; reason?: string }>;
 }) {
+  // Warm the connection to Instagram while the creator reads this page, so
+  // the consent dialog starts loading the moment they tap.
+  preconnect('https://www.instagram.com');
+  prefetchDNS('https://static.cdninstagram.com');
   const params = await searchParams;
   const errorKey = params.error ?? params.reason;
   const error = errorKey ? copy.signinErrors[errorKey] : undefined;
@@ -55,6 +60,11 @@ export default async function SigninPage({
         <InstagramGlyph />
         {copy.signin.cta}
       </InstagramConnectButton>
+      <p className="mt-3 text-center text-[13px] text-fg-muted">
+        <a href="/auth/instagram?switch=1" className="underline underline-offset-4 hover:text-fg">
+          {copy.signin.switchAccount}
+        </a>
+      </p>
 
       <ul className="mt-8 space-y-3 border-t border-edge pt-6">
         {copy.signin.notes.map((note) => (

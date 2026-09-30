@@ -17,6 +17,7 @@ export const copy = {
     title: 'Sign up with Instagram',
     sub: "Your Instagram account is your ABC account. There's nothing else to fill in — no password, no email verification.",
     cta: 'Continue with Instagram',
+    switchAccount: 'Use a different Instagram account',
     notes: [
       'Requires a professional Instagram account — Creator or Business.',
       'One Instagram account per ABC creator profile.',
