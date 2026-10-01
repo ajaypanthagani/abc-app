@@ -80,6 +80,10 @@ function publicOrigin(request: Request, url: URL): string {
 }
 
 function clientIp(request: Request): string | null {
+  // Behind Cloudflare the edge addresses below are Cloudflare's; the visitor's
+  // own address is in CF-Connecting-IP.
+  const cf = request.headers.get('cf-connecting-ip');
+  if (cf) return cf.trim();
   const real = request.headers.get('x-real-ip');
   if (real) return real.trim();
   const xff = request.headers.get('x-forwarded-for');
