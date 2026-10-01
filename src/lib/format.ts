@@ -31,3 +31,38 @@ export function formatDate(iso: string | null | undefined): string {
   if (!iso) return '—';
   return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(iso));
 }
+
+// Paise → "₹25,960" (lakh grouping, no decimals).
+export function rupees(minor: number | null | undefined): string {
+  if (minor === null || minor === undefined) return '—';
+  return `₹${inNumber.format(Math.round(minor / 100))}`;
+}
+
+// Paise → "₹96K" / "₹4.9L" for compact chart labels.
+export function rupeesCompact(minor: number): string {
+  const r = minor / 100;
+  if (r >= 100_000) return `₹${(r / 100_000).toFixed(1)}L`;
+  if (r >= 1_000) return `₹${Math.round(r / 1_000)}K`;
+  return `₹${Math.round(r)}`;
+}
+
+const shortFmt = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short' });
+// "14 Aug"
+export function shortDate(iso: string | null | undefined): string {
+  return iso ? shortFmt.format(new Date(iso)) : '—';
+}
+
+// "2026-08" → "Aug"
+export function monthLabel(key: string): string {
+  const [y, m] = key.split('-').map(Number);
+  return new Intl.DateTimeFormat('en-IN', { month: 'short' }).format(new Date(Date.UTC(y, m - 1, 15)));
+}
+
+export function windowRange(from: string | null, to: string | null): string {
+  if (!from || !to) return '—';
+  return `${shortDate(from)} – ${shortDate(to)}`;
+}
+
+export function percent(fraction: number | null | undefined, digits = 1): string {
+  return fraction === null || fraction === undefined ? '—' : `${(fraction * 100).toFixed(digits)}%`;
+}

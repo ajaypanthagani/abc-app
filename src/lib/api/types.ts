@@ -159,3 +159,124 @@ export interface ProfilePayload {
 export interface ApiErrorBody {
   error: { code: string; message: string; details?: unknown; requestId?: string | number };
 }
+
+// ── Creator dashboard (/v1/creators/me/{shell,home,campaigns,performance,payments})
+// Money is integer paise; dates ISO. Creators never see CPM or brand pricing.
+
+export type StageTone = 'hot' | 'ink' | 'soft' | 'muted';
+export interface Stage {
+  index: number;
+  label: string;
+  tone: StageTone;
+  next: string;
+}
+
+export interface DashboardShell {
+  name: string | null;
+  handle: string | null;
+  avatarUrl: string | null;
+  availability: 'OPEN' | 'LIMITED' | 'PAUSED';
+  instagram: { status: string; lastSyncAt: string | null } | null;
+  badges: { campaigns: number; payments: number };
+}
+
+export interface DashboardHome {
+  stats: {
+    paidToDateMinor: number;
+    paidCampaigns: number;
+    clearingMinor: number;
+    clearingCount: number;
+    eligibleViews90d: number;
+    completionRate: number | null;
+    finishedCampaigns: number;
+  };
+  earnings: { month: string; amountMinor: number }[];
+  upNext: {
+    id: string;
+    campaign: string;
+    brand: string;
+    stage: Stage;
+    deliverables: string | null;
+    liveFrom: string | null;
+    liveTo: string | null;
+    maxPayoutMinor: number;
+    daysLeft: number | null;
+  }[];
+}
+
+export interface CreatorCampaign {
+  id: string;
+  campaign: {
+    id: string;
+    name: string;
+    brand: string;
+    brief: string | null;
+    liveFrom: string | null;
+    liveTo: string | null;
+    sampling: string | null;
+    measurementDays: number;
+    formats: { format: string; requirements: string | null; referenceUrls: string[] }[];
+  };
+  deliverables: string | null;
+  state: string;
+  stage: Stage;
+  payableViewsCap: number;
+  eligibleViews: number | null;
+  capShare: number | null;
+  maxPayoutMinor: number;
+  payout:
+    | { kind: 'final'; grossMinor: number; netMinor: number; tdsMinor: number; status: string; paidAt: string | null; reference: string | null }
+    | { kind: 'accruing'; grossMinor: number }
+    | null;
+  publishedAt: string | null;
+  measurementEndsAt: string | null;
+  daysLeft: number | null;
+  posts: { format: string; permalink: string | null; publishedAt: string; measurementEndsAt: string; views: number | null }[];
+}
+
+export interface DashboardCampaigns {
+  activeCount: number;
+  completedCount: number;
+  pipeline: string[];
+  featured: CreatorCampaign | null;
+  rows: CreatorCampaign[];
+}
+
+export interface DashboardPerformance {
+  metrics: {
+    computedAt: string;
+    medianReelViews: number | null;
+    viewFollowerRatio: number | null;
+    consistency: number | null;
+    saveRate: number | null;
+    shareRate: number | null;
+    sampleMediaCount: number | null;
+  } | null;
+  completedCampaigns: number;
+  reviews: { at: string; change: string; reason: string }[];
+}
+
+export interface DashboardPayments {
+  stats: {
+    clearingMinor: number;
+    clearingCount: number;
+    paidFyMinor: number;
+    tdsFyMinor: number;
+    avgPerCampaignMinor: number | null;
+    avgSample: number;
+    fyStartYear: number;
+  };
+  rows: {
+    id: string;
+    campaign: string;
+    brand: string;
+    eligibleViews: number | null;
+    amountMinor: number;
+    status: { label: string; tone: 'hot' | 'ink' | 'soft' };
+    measurementEndsAt: string | null;
+    paidAt: string | null;
+    reference: string | null;
+    tdsMinor: number | null;
+  }[];
+  payoutAccount: null;
+}

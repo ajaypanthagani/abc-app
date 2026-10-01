@@ -6,7 +6,7 @@ export const stepToRoute: Record<OnboardingStep, string> = {
   connect: '/onboarding/connect',
   profile: '/onboarding/profile',
   sync: '/onboarding/sync',
-  complete: '/network',
+  complete: '/home',
 };
 
 // Server-authoritative resumable onboarding: every gated page asserts the step

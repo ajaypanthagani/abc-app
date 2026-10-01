@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { requireStep } from '@/lib/onboarding';
 import { getCreator, getTaxonomies } from '@/lib/api/server';
 import { copy } from '@/lib/copy';
-import { Micro } from '@/components/ui/Micro';
 import { Pill } from '@/components/ui/Pill';
 import { ProfileForm } from '@/components/onboarding/ProfileForm';
+import { StepBars } from '@/components/onboarding/StepBars';
 import { SyncStrip } from '@/components/onboarding/SyncStrip';
 
 export const metadata: Metadata = { title: 'Your profile' };
@@ -15,8 +15,8 @@ export default async function ProfileStepPage() {
 
   return (
     <div>
-      <Micro>Step 1 of 2</Micro>
-      <h2 className="mt-3 text-[27px] font-medium tracking-[-0.02em] text-fg">{copy.profileStep.title}</h2>
+      <StepBars step={2} />
+      <h2 className="text-[27px] font-medium tracking-[-0.02em] text-fg">{copy.profileStep.title}</h2>
       <p className="mt-2 text-[15px] text-fg-muted">{copy.profileStep.sub}</p>
 
       {creator.instagram ? (

@@ -15,8 +15,8 @@ const textInputCls =
   'h-11 w-full rounded border border-field bg-card px-3 text-[15px] text-fg placeholder:text-fg-muted';
 
 // Shared between the onboarding profile step (POST /v1/onboarding/profile,
-// then server-routed onward) and later edits from the network page
-// (PATCH /v1/creators/me/profile, then back).
+// then on to the "You're ready" step) and later edits from the dashboard's
+// Profile page (PATCH /v1/creators/me/profile, saved in place).
 export function ProfileForm({
   taxonomies,
   current,
@@ -35,6 +35,7 @@ export function ProfileForm({
   const [languagesOtherText, setLanguagesOtherText] = useState(current?.languagesOtherText ?? '');
   const [exclusions, setExclusions] = useState<string[]>(current?.exclusions ?? []);
   const [submitting, setSubmitting] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const submit = async (e: React.FormEvent) => {
@@ -66,7 +67,9 @@ export function ProfileForm({
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        router.push('/');
+        // The "You're ready" step; it routes to the sync screen itself if the
+        // Instagram import is still running.
+        router.push('/onboarding/ready');
         router.refresh();
       } else {
         await clientFetch('/v1/creators/me/profile', {
@@ -74,7 +77,8 @@ export function ProfileForm({
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        router.push('/network');
+        setSaved(true);
+        setSubmitting(false);
         router.refresh();
       }
     } catch (err) {
@@ -158,6 +162,11 @@ export function ProfileForm({
       <Button type="submit" disabled={submitting} className="w-full">
         {submitting ? 'Saving…' : mode === 'onboarding' ? copy.profileStep.submit : 'Save changes'}
       </Button>
+      {saved && mode === 'edit' ? (
+        <p role="status" className="text-center text-[13px] text-fg-muted">
+          {copy.dashboard.profile.saved}
+        </p>
+      ) : null}
     </form>
   );
 }

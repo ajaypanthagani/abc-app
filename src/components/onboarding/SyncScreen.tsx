@@ -6,20 +6,20 @@ import { copy } from '@/lib/copy';
 import { clientFetch } from '@/lib/api/client';
 import { Button } from '@/components/ui/Button';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { Micro } from '@/components/ui/Micro';
 import type { SyncCurrent } from '@/lib/api/types';
+import { StepBars } from './StepBars';
 import { SyncStages } from './SyncStages';
 import { useSyncPoll } from './useSyncPoll';
 
 // Full sync screen: shown when the profile step is already done but the
-// backfill is still running. On completion the server decides where to go.
+// backfill is still running. On completion it continues to "You're ready".
 export function SyncScreen({ initial, username }: { initial: SyncCurrent; username: string | null }) {
   const { current, terminal, restart } = useSyncPoll(initial);
   const router = useRouter();
   const [retrying, setRetrying] = useState(false);
 
   useEffect(() => {
-    if (terminal && current?.status === 'idle') router.refresh();
+    if (terminal && current?.status === 'idle') router.replace('/onboarding/ready');
   }, [terminal, current?.status, router]);
 
   const retry = async () => {
@@ -37,7 +37,7 @@ export function SyncScreen({ initial, username }: { initial: SyncCurrent; userna
 
   return (
     <div>
-      <Micro>Step 2 of 2</Micro>
+      <StepBars step={2} />
       <h2 className="mt-3 text-[27px] font-medium tracking-[-0.02em] text-fg">
         {username ? `Syncing @${username}` : copy.sync.title}
       </h2>

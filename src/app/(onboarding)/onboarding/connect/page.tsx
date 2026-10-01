@@ -3,6 +3,7 @@ import { requireStep } from '@/lib/onboarding';
 import { copy } from '@/lib/copy';
 import { InstagramConnectButton } from '@/components/onboarding/InstagramConnectButton';
 import { Micro } from '@/components/ui/Micro';
+import { StepBars } from '@/components/onboarding/StepBars';
 
 export const metadata: Metadata = { title: 'Connect Instagram' };
 
@@ -14,6 +15,7 @@ export default async function ConnectPage() {
 
   return (
     <div>
+      <StepBars step={1} />
       <h2 className="text-[27px] font-medium tracking-[-0.02em] text-fg">{copy.connect.title}</h2>
       <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">{copy.connect.sub}</p>
 

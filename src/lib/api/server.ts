@@ -5,6 +5,11 @@ import { redirect } from 'next/navigation';
 import { SERVER_API_URL } from './shared';
 import type {
   CreatorInsights,
+  DashboardCampaigns,
+  DashboardHome,
+  DashboardPayments,
+  DashboardPerformance,
+  DashboardShell,
   CreatorMe,
   OnboardingState,
   SessionResponse,
@@ -50,3 +55,8 @@ export const getCreator = cache(() => apiFetch<CreatorMe>('/v1/creators/me'));
 export const getTaxonomies = cache(() => apiFetch<Taxonomies>('/v1/taxonomies'));
 export const getSyncCurrent = cache(() => apiFetch<SyncCurrent>('/v1/creators/me/sync/current'));
 export const getInsights = cache(() => apiFetch<CreatorInsights>('/v1/creators/me/insights'));
+export const getShell = cache(() => apiFetch<DashboardShell>('/v1/creators/me/shell'));
+export const getHome = cache(() => apiFetch<DashboardHome>('/v1/creators/me/home'));
+export const getMyCampaigns = cache(() => apiFetch<DashboardCampaigns>('/v1/creators/me/campaigns'));
+export const getPerformance = cache(() => apiFetch<DashboardPerformance>('/v1/creators/me/performance'));
+export const getPayments = cache(() => apiFetch<DashboardPayments>('/v1/creators/me/payments'));
