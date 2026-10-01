@@ -67,6 +67,15 @@ const SORTERS: Record<Sort, (a: Candidate, b: Candidate) => number> = {
   GROWTH: (a, b) => (b.followerGrowth90d ?? -9) - (a.followerGrowth90d ?? -9),
 };
 
+// Short tag for why a creator can't be added; the full reason is the tooltip.
+function blockerLabel(reason: string): string {
+  if (reason.startsWith('No CPM')) return 'No rate';
+  if (reason.startsWith('No Reel')) return 'No views';
+  if (reason.startsWith('Brand safety')) return 'Brand safety';
+  if (reason.startsWith('Creator is')) return reason.slice('Creator is '.length).replace(/^\w/, (x) => x.toUpperCase());
+  return 'Blocked';
+}
+
 // Per-creator contribution to a KPI target, from 90-day medians (one Reel).
 function projectionFor(c: Candidate, o: Objective): number | null {
   if (!c.projection) return null;
@@ -327,7 +336,7 @@ export function MixBuilder({ data, activeMixId }: { data: Data; activeMixId: str
 
       <KpiStrip
         items={[
-          { label: 'In mix', value: entries.length, note: `Of ${candidates.length} eligible creators` },
+          { label: 'In mix', value: entries.length, note: `Of ${candidates.length} creators` },
           { label: 'Brand price', value: rupees(price), note: `Of ${rupees(campaign.budgetMinor)} budget`, tone: campaign.budgetMinor && price > campaign.budgetMinor ? 'danger' : undefined },
           { label: 'Creator payouts', value: rupees(payout), note: 'At cap' },
           { label: 'Payable views', value: views(capSum), note: 'Caps summed' },
@@ -392,7 +401,7 @@ export function MixBuilder({ data, activeMixId }: { data: Data; activeMixId: str
                   <div className="min-w-0">
                     <div className="truncate text-[12.5px] font-medium">{c.name ?? '—'}</div>
                     <div className="truncate font-mono text-[9px] uppercase text-[#888888]">
-                      @{c.handle} · {views(c.followers)} fol · {c.city ?? '—'}
+                      {c.handle ? `@${c.handle}` : 'IG not connected'} · {views(c.followers)} fol · {c.city ?? '—'}
                     </div>
                   </div>
                 </Link>
@@ -424,7 +433,7 @@ export function MixBuilder({ data, activeMixId }: { data: Data; activeMixId: str
                     </button>
                   ) : blocked ? (
                     <span title={c.blockers.join(' · ')}>
-                      <Tag tone="outline">{c.blockers[0].startsWith('No CPM') ? 'No rate' : 'Blocked'}</Tag>
+                      <Tag tone="outline">{blockerLabel(c.blockers[0])}</Tag>
                     </span>
                   ) : (
                     <button
